@@ -284,10 +284,248 @@ document.addEventListener("DOMContentLoaded", () => {
           contactForm.reset();
           
           if (typeof window.showAdminToast === "function") {
-            window.showAdminToast("Message sent successfully! Dr. Ramesh will respond soon.", "success");
+            window.showAdminToast("Message sent successfully! Mr. Ramesh will respond soon.", "success");
           }
         }, 1500);
       }
     });
   }
+
+  // --- CERTIFICATE MODAL TRIGGER BINDINGS ---
+  const certModalClose = document.getElementById("cert-modal-close");
+  const certModalDone = document.getElementById("cert-modal-done");
+  if (certModalClose) {
+    certModalClose.addEventListener("click", closeCertPreview);
+  }
+  if (certModalDone) {
+    certModalDone.addEventListener("click", closeCertPreview);
+  }
+
+  // --- AI CHATBOT SYSTEM ---
+  const chatbotBtn = document.getElementById("chatbot-btn");
+  const chatWindow = document.getElementById("chat-window");
+  const chatClose = document.getElementById("chat-close");
+  const chatMessages = document.getElementById("chat-messages");
+  const chatInputForm = document.getElementById("chat-input-form");
+  const chatInput = document.getElementById("chat-input");
+  const suggestionChips = document.querySelectorAll(".cs-chip");
+
+  // Toggle chat window
+  if (chatbotBtn && chatWindow) {
+    chatbotBtn.addEventListener("click", () => {
+      chatWindow.classList.add("open");
+      chatbotBtn.classList.add("hidden");
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    });
+  }
+
+  if (chatClose && chatWindow && chatbotBtn) {
+    chatClose.addEventListener("click", () => {
+      chatWindow.classList.remove("open");
+      chatbotBtn.classList.remove("hidden");
+    });
+  }
+
+  // Handle suggested prompt clicks
+  suggestionChips.forEach(chip => {
+    chip.addEventListener("click", () => {
+      const prompt = chip.getAttribute("data-prompt");
+      if (prompt) {
+        handleUserMessage(prompt);
+      }
+    });
+  });
+
+  // Handle chat submission
+  if (chatInputForm) {
+    chatInputForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const message = chatInput.value.trim();
+      if (!message) return;
+      
+      chatInput.value = "";
+      handleUserMessage(message);
+    });
+  }
+
+  // Handle core user messaging logic
+  async function handleUserMessage(messageText) {
+    // 1. Append user message
+    const userMsg = document.createElement("div");
+    userMsg.className = "msg msg-user";
+    userMsg.innerHTML = `<div class="msg-bubble">${escapeHtml(messageText)}</div>`;
+    chatMessages.appendChild(userMsg);
+    
+    // Scroll
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    // Hide suggestions to keep view clean
+    const suggestions = document.getElementById("chat-suggestions");
+    if (suggestions) suggestions.style.display = "none";
+
+    // 2. Show typing indicator
+    const typingIndicator = document.createElement("div");
+    typingIndicator.className = "msg msg-bot";
+    typingIndicator.id = "chat-typing-indicator";
+    typingIndicator.innerHTML = `
+      <div class="msg-avatar"><i class="fas fa-robot"></i></div>
+      <div class="msg-bubble typing-dots">
+        <span></span><span></span><span></span>
+      </div>
+    `;
+    chatMessages.appendChild(typingIndicator);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    // 3. Get response (Gemini API or fallback)
+    let botReplyText = "";
+    const apiKey = localStorage.getItem("ramesh_gemini_api_key");
+
+    try {
+      if (apiKey) {
+        botReplyText = await callGeminiAPI(apiKey, messageText);
+      } else {
+        // Mock a slight network delay for natural feel
+        await new Promise(resolve => setTimeout(resolve, 800));
+        botReplyText = generateLocalResponse(messageText);
+      }
+    } catch (err) {
+      console.error("AI Chatbot Error: ", err);
+      botReplyText = `Sorry, I encountered an error while trying to process your request: ${err.message}. Please check your Gemini API key configuration in Admin Panel settings or try again.`;
+    }
+
+    // 4. Remove typing indicator
+    const indicator = document.getElementById("chat-typing-indicator");
+    if (indicator) indicator.remove();
+
+    // 5. Append bot message
+    const botMsg = document.createElement("div");
+    botMsg.className = "msg msg-bot";
+    botMsg.innerHTML = `
+      <div class="msg-avatar"><i class="fas fa-robot"></i></div>
+      <div class="msg-bubble">${botReplyText}</div>
+    `;
+    chatMessages.appendChild(botMsg);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  function escapeHtml(unsafe) {
+    return unsafe
+         .replace(/&/g, "&amp;")
+         .replace(/</g, "&lt;")
+         .replace(/>/g, "&gt;")
+         .replace(/"/g, "&quot;")
+         .replace(/'/g, "&#039;");
+  }
+
+  async function callGeminiAPI(apiKey, query) {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    
+    const prompt = `You are the AI Assistant representative for Mr. Ramesh Gummadi, an AI Researcher, Assistant Professor, and Technical Trainer. 
+Here is his profile information from his portfolio:
+${JSON.stringify(PORTFOLIO_DATA, null, 2)}
+
+Instructions:
+1. Respond as Ramesh's friendly AI representative. Use third person ("Mr. Ramesh Gummadi...", "He...") or first-person representation if appropriate, but third-person is preferred.
+2. Answer the user's question accurately using ONLY the provided data.
+3. Be professional, concise, and helpful. Keep responses under 3-4 sentences if possible. Try to use simple HTML formatting (like <strong> tags, lists, or line breaks) if it helps presentation, but keep it clean.
+4. If asked about things not related to Ramesh's professional background, education, skills, or portfolio, politely pivot back to how you can assist them regarding Ramesh's credentials.
+
+User Question: ${query}`;
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        contents: [{
+          parts: [{
+            text: prompt
+          }]
+        }]
+      })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.error?.message || "HTTP error " + response.status);
+    }
+
+    const result = await response.json();
+    const reply = result.candidates?.[0]?.content?.parts?.[0]?.text;
+    if (!reply) {
+      throw new Error("Invalid response structure from Gemini API");
+    }
+    return reply;
+  }
+
+  function generateLocalResponse(query) {
+    const q = query.toLowerCase();
+    
+    if (q.includes("education") || q.includes("degree") || q.includes("study") || q.includes("college") || q.includes("university") || q.includes("mca") || q.includes("m.tech") || q.includes("qualification") || q.includes("jntu") || q.includes("academic")) {
+      return `Mr. Ramesh has dual postgraduate degrees: an M.Tech in Artificial Intelligence from JNTU Kakinada (GPA: 8.5/10, 2023-2025) and an MCA from Dr. BR Ambedkar University (GPA: 7.88/10, 2020-2022). He also completed his B.Com from Aditya Degree College.`;
+    }
+    
+    if (q.includes("experience") || q.includes("teaching") || q.includes("work") || q.includes("job") || q.includes("collegedekho") || q.includes("giet") || q.includes("veranda") || q.includes("six phrase") || q.includes("professor") || q.includes("trainer")) {
+      return `Mr. Ramesh has over 4 years of academic and corporate training experience. Currently, he is a Java & AI SME / Faculty at College Dekho - ImaginXP. He was previously a Technical Trainer at Six Phrase-VERANDA, and an Assistant Professor & IT Developer at GIET Institutions.`;
+    }
+    
+    if (q.includes("project") || q.includes("rag") || q.includes("instagram") || q.includes("n8n") || q.includes("fake news") || q.includes("system") || q.includes("code") || q.includes("github") || q.includes("demo")) {
+      return `Ramesh has built several advanced projects:
+      <br>• <strong>RAG-Based Intelligent Document Assistant</strong> (LangChain, ChromaDB, FastAPI)
+      <br>• <strong>AI-Powered Instagram Content Automation System</strong> (n8n, OpenAI, Google Sheets)
+      <br>• <strong>Fake News Detection System</strong> (Python, Scikit-Learn, NLP, Flask).
+      <br>Check out his repositories on <a href="https://github.com/ramesh-gummadi" target="_blank">GitHub</a>!`;
+    }
+    
+    if (q.includes("contact") || q.includes("email") || q.includes("phone") || q.includes("mobile") || q.includes("reach") || q.includes("linkedin") || q.includes("location") || q.includes("social")) {
+      return `You can reach Mr. Ramesh Gummadi via email at <a href="mailto:rameshgummadi53@gmail.com">rameshgummadi53@gmail.com</a> or phone at <strong>+91 95154 54211</strong>. He is located in Andhra Pradesh, India. His LinkedIn is <a href="https://linkedin.com/in/gummadi-ramesh-85257a260" target="_blank">linkedin.com/in/gummadi-ramesh-85257a260</a>.`;
+    }
+    
+    if (q.includes("research") || q.includes("publication") || q.includes("paper") || q.includes("icrame") || q.includes("thesis") || q.includes("conference") || q.includes("journal")) {
+      return `Ramesh published a paper titled "Faculty-Guided Generative AI Framework for Immersive Classroom Education: A Conceptual Framework" at the ICRAME-2026 International Conference. His research focus domains are Generative AI, RAG Systems, and Agentic AI.`;
+    }
+    
+    if (q.includes("youtube") || q.includes("channel") || q.includes("video") || q.includes("aivr tube")) {
+      return `Ramesh hosts the <strong>AIVR</strong> YouTube Channel (<a href="https://youtube.com/@AIVR_Channel" target="_blank">@AIVR_Channel</a>) where he uploads content on AI pipelines, VR classroom integrations, and WebXR tutorials. The channel has 12K+ subscribers and 150+ videos.`;
+    }
+    
+    if (q.includes("skills") || q.includes("java") || q.includes("python") || q.includes("programming") || q.includes("sql") || q.includes("ml") || q.includes("ai") || q.includes("nlp") || q.includes("deep learning") || q.includes("cloud") || q.includes("tools")) {
+      return `Ramesh's core competencies include:
+      <br>• <strong>AI & ML</strong>: Gen AI, Machine Learning, RAG, NLP, Deep Learning, CNN
+      <br>• <strong>Programming</strong>: Java, Python, C, SQL
+      <br>• <strong>Frontend</strong>: HTML, CSS, Flask, Streamlit
+      <br>• <strong>Cloud/Tools</strong>: Google Cloud, TensorFlow, n8n, Git`;
+    }
+    
+    if (q.includes("who are you") || q.includes("who is") || q.includes("ramesh") || q.includes("about") || q.includes("bio") || q.includes("gummadi")) {
+      return `Mr. Ramesh Gummadi is an Assistant Professor, AI Researcher, and Technical Trainer specializing in Java programming and Generative AI frameworks. He holds an M.Tech in AI and MCA, and is passionate about educational innovation.`;
+    }
+    
+    return `I am Ramesh's local AI assistant. I couldn't find a direct match for "${query}". Try asking me about his "education", "experience", "projects", "publications", "skills", or how to "contact" him. Or, add a Google Gemini API Key in the Admin Panel to unlock full open-ended AI conversation.`;
+  }
 });
+
+// --- GLOBAL MODAL CONTROLLERS ---
+window.openCertPreview = function(name, issuer, year) {
+  const modal = document.getElementById("cert-modal");
+  const title = document.getElementById("cert-modal-title");
+  const issuerEl = document.getElementById("cert-modal-issuer");
+  const yearEl = document.getElementById("cert-modal-year");
+  
+  if (modal && title && issuerEl && yearEl) {
+    title.textContent = name;
+    issuerEl.textContent = issuer;
+    yearEl.textContent = `Year: ${year}`;
+    modal.classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+};
+
+window.closeCertPreview = function() {
+  const modal = document.getElementById("cert-modal");
+  if (modal) {
+    modal.classList.remove("open");
+    document.body.style.overflow = "";
+  }
+};

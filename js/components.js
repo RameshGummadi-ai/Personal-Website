@@ -1,4 +1,49 @@
-// Dynamic HTML Component Renderers for Dr. Ramesh Gummadi's Portfolio
+// Dynamic HTML Component Renderers for Mr. Ramesh Gummadi's Portfolio
+
+// Path helper to translate assets for subfolders
+function getAssetPath(path) {
+  if (!path) return "";
+  if (path.startsWith("http://") || path.startsWith("https://") || path.startsWith("mailto:") || path.startsWith("data:")) {
+    return path;
+  }
+  
+  // Robust check to determine if the current page is loaded from a subfolder
+  let isSubfolder = false;
+  
+  // 1. Check window.location.pathname
+  const pathname = window.location.pathname.toLowerCase();
+  if (pathname.includes("rameshgummadi")) {
+    isSubfolder = true;
+  } 
+  // 2. Check if body class does not contain the root page identifier "aivr-page"
+  else if (document.body && !document.body.classList.contains("aivr-page")) {
+    isSubfolder = true;
+  }
+  // 3. Fallback: check if the scripts are loaded via parent-relative paths
+  else {
+    const scripts = document.getElementsByTagName("script");
+    for (let i = 0; i < scripts.length; i++) {
+      const src = scripts[i].getAttribute("src") || "";
+      if (src.includes("components.js") && src.startsWith("../")) {
+        isSubfolder = true;
+        break;
+      }
+    }
+  }
+
+  console.log(`[getAssetPath] Path: "${path}", detected isSubfolder: ${isSubfolder}, pathname: "${pathname}"`);
+
+  if (isSubfolder) {
+    if (path.startsWith("../")) {
+      return path;
+    }
+    // Remove leading slash if present to avoid double-slashes when prefixing
+    const cleanPath = path.startsWith("/") ? path.substring(1) : path;
+    return "../" + cleanPath;
+  }
+  return path;
+}
+
 
 // Render social links in Hero and Contact sections
 function renderSocialIcons() {
@@ -283,18 +328,26 @@ function renderCertifications() {
   const container = document.getElementById("certifications-container");
   if (!container) return;
 
-  container.innerHTML = PORTFOLIO_DATA.certifications.map(cert => `
-    <div class="cert-card glass-panel">
-      <div class="cert-icon-box">
-        <i class="${cert.icon || 'fas fa-award'}"></i>
+  container.innerHTML = PORTFOLIO_DATA.certifications.map(cert => {
+    // Safe string escape for onclick handler
+    const escapedName = cert.name.replace(/'/g, "\\'");
+    const escapedIssuer = cert.issuer.replace(/'/g, "\\'");
+    return `
+      <div class="cert-card glass-panel">
+        <div class="cert-icon-box">
+          <i class="${cert.icon || 'fas fa-award'}"></i>
+        </div>
+        <div class="cert-info">
+          <h4>${cert.name}</h4>
+          <div class="cert-issuer">${cert.issuer}</div>
+          <div class="cert-year">${cert.year}</div>
+          <button class="btn btn-glass btn-small cert-preview-btn" style="margin-top: 0.8rem; width: 100%; font-size: 0.8rem; padding: 0.4rem 0.8rem;" onclick="openCertPreview('${escapedName}', '${escapedIssuer}', '${cert.year}')">
+            <i class="fas fa-eye"></i> Preview Credential
+          </button>
+        </div>
       </div>
-      <div class="cert-info">
-        <h4>${cert.name}</h4>
-        <div class="cert-issuer">${cert.issuer}</div>
-        <div class="cert-year">${cert.year}</div>
-      </div>
-    </div>
-  `).join("");
+    `;
+  }).join("");
 }
 
 // Render YouTube channel branding, stats, and latest video lists
@@ -396,7 +449,30 @@ function renderAllComponents() {
   if (introEl) introEl.textContent = PORTFOLIO_DATA.profile.shortIntro;
   
   const imgEl = document.getElementById("hero-profile-img");
-  if (imgEl) imgEl.src = PORTFOLIO_DATA.profile.avatar;
+  if (imgEl) {
+    const resolvedSrc = getAssetPath(PORTFOLIO_DATA.profile.avatar);
+    imgEl.src = resolvedSrc;
+    
+    // Self-healing fallback if the resolved image path fails to load (e.g. due to custom domain mapping differences)
+    imgEl.onerror = function() {
+      if (!this.dataset.triedFallback) {
+        this.dataset.triedFallback = "true";
+        const currentSrc = this.src;
+        console.warn(`[hero-profile-img] Failed to load from: "${currentSrc}". Trying self-healing fallback path.`);
+        
+        // If relative failed, try root relative
+        if (currentSrc.includes("/RameshGummadi/") || currentSrc.includes("../")) {
+          this.src = "assets/ram.jpg";
+        } 
+        // If root relative failed, try relative
+        else {
+          this.src = "../assets/ram.jpg";
+        }
+      } else {
+        console.error("[hero-profile-img] All fallback path attempts failed to load the profile photo.");
+      }
+    };
+  }
 
   const emailEl = document.getElementById("contact-val-email");
   if (emailEl) {
@@ -408,7 +484,10 @@ function renderAllComponents() {
   if (locEl) locEl.textContent = PORTFOLIO_DATA.profile.location;
 
   const downloadBtn = document.getElementById("resume-download-btn");
-  if (downloadBtn) downloadBtn.href = PORTFOLIO_DATA.profile.resumeLink;
+  if (downloadBtn) downloadBtn.href = getAssetPath(PORTFOLIO_DATA.profile.resumeLink);
+
+  const heroDownloadBtn = document.getElementById("hero-download-cv-btn");
+  if (heroDownloadBtn) heroDownloadBtn.href = getAssetPath(PORTFOLIO_DATA.profile.resumeLink);
 
   // Run dynamic list builders
   renderSocialIcons();

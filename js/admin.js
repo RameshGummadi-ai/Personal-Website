@@ -121,6 +121,31 @@ function initAdminPanel() {
   if (exportModalCloseBtn) exportModalCloseBtn.addEventListener("click", () => exportModal.classList.remove("open"));
   if (copyJsonBtn) copyJsonBtn.addEventListener("click", copyConfigJson);
   if (downloadJsonBtn) downloadJsonBtn.addEventListener("click", downloadConfigJsFile);
+
+  // Save/Delete API Key Listeners
+  const saveApiKeyBtn = document.getElementById("save-api-key-btn");
+  const deleteApiKeyBtn = document.getElementById("delete-api-key-btn");
+  const geminiKeyInput = document.getElementById("admin-gemini-key");
+
+  if (saveApiKeyBtn && geminiKeyInput) {
+    saveApiKeyBtn.addEventListener("click", () => {
+      const key = geminiKeyInput.value.trim();
+      if (key) {
+        localStorage.setItem("ramesh_gemini_api_key", key);
+        showToast("Gemini API Key saved successfully!", "success");
+      } else {
+        showToast("Please enter a valid API key.", "error");
+      }
+    });
+  }
+
+  if (deleteApiKeyBtn && geminiKeyInput) {
+    deleteApiKeyBtn.addEventListener("click", () => {
+      localStorage.removeItem("ramesh_gemini_api_key");
+      geminiKeyInput.value = "";
+      showToast("Gemini API Key removed.", "success");
+    });
+  }
 }
 
 // Authentication Logic
@@ -156,6 +181,15 @@ function showDashboard() {
   populatePubsList();
   populateCertsList();
   populateAchievementsList();
+  populateApiKeyField();
+}
+
+function populateApiKeyField() {
+  const geminiKeyInput = document.getElementById("admin-gemini-key");
+  if (geminiKeyInput) {
+    const savedKey = localStorage.getItem("ramesh_gemini_api_key") || "";
+    geminiKeyInput.value = savedKey;
+  }
 }
 
 // PROFILE TAB LOGIC

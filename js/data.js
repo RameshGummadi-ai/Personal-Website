@@ -1,186 +1,152 @@
 // Default portfolio data for Dr. Ramesh Gummadi
 const DEFAULT_PORTFOLIO_DATA = {
   profile: {
-    name: "Dr. Ramesh Gummadi",
-    subtitle: "Future PhD Scholar | AI Researcher | Assistant Professor",
+    name: "Gummadi Ramesh",
+    subtitle: "AI Researcher | Assistant Professor | Technical Trainer",
     avatar: "assets/ram.jpg",
     resumeLink: "assets/Ramesh_Gummadi_Resume.pdf",
-    shortIntro: "Passionate educator and AI researcher with expertise in Computer Science, Artificial Intelligence, Data Science, Software Engineering, and Emerging Technologies.",
-    email: "ramesh.gummadi.academic@gmail.com",
-    phone: "+91 99999 88888",
-    location: "Hyderabad, India",
+    shortIntro: "Passionate AI researcher, assistant professor, and technical trainer with dual postgraduate degrees (MCA & M.Tech). Specializing in Gen AI, Machine Learning, Data Science, NLP, and RAG systems.",
+    email: "rameshgummadi53@gmail.com",
+    phone: "+91 95154 54211",
+    location: "Andhra Pradesh, India",
     socials: {
-      linkedin: "https://linkedin.com/in/ramesh-gummadi",
+      linkedin: "https://linkedin.com/in/gummadi-ramesh-85257a260",
       github: "https://github.com/ramesh-gummadi",
       scholar: "https://scholar.google.com/citations?user=ramesh-gummadi",
       youtube: "https://youtube.com/@AIVR_Channel",
-      email: "mailto:ramesh.gummadi.academic@gmail.com"
+      email: "mailto:rameshgummadi53@gmail.com"
     },
     titles: [
-      "Assistant Professor",
       "AI Researcher",
+      "Assistant Professor",
       "Technical Trainer",
-      "Future PhD Scholar",
-      "Content Creator"
+      "Java Expert",
+      "AI/ML Developer"
     ],
-    careerGoal: "PhD in AI and Immersive Learning Technologies, bridging the gap between cutting-edge Generative AI frameworks and VR-enabled classroom environments.",
-    aboutBio: "I am a dedicated computer science educator, trainer, and researcher with MCA and M.Tech (CSE - AI) degrees. Over the past 4+ years, I have taught core subjects, run coding bootcamps, designed specialized AI curricula, and mentored 10,000+ students. My primary research interests lie at the intersection of Generative AI, Autonomous AI Agents, VR Learning Systems, and Educational Technology."
+    parentFolder: "Personal Asst",
+    careerGoal: "Highly motivated and detail-oriented IT professional with a strong educational background in MCA and M.Tech (AI). Seeking a challenging role where I can utilize my AI/ML knowledge and software training capabilities to drive innovation and growth.",
+    aboutBio: "I am an experienced Computer Science educator, software developer, and technical trainer. I hold an MCA from Dr. BR Ambedkar University and an M.Tech in Artificial Intelligence from JNTU Kakinada (GPA 8.5/10). My primary focus areas are Generative AI, Machine Learning, Natural Language Processing, and RAG architecture. I have delivered bootcamps at multiple universities across India and taught core AI/ML coursework."
   },
   achievements: [
-    { id: "ach-1", value: "4+", label: "Years Teaching Experience", icon: "fas fa-chalkboard-teacher" },
-    { id: "ach-2", value: "10K+", label: "Students Mentored", icon: "fas fa-users" },
-    { id: "ach-3", value: "5+", label: "AI Research Publications", icon: "fas fa-file-invoice" },
-    { id: "ach-4", value: "100K+", label: "YouTube Educational Views", icon: "fab fa-youtube" }
+    { id: "ach-1", value: "4+", label: "Years Teaching & Training", icon: "fas fa-chalkboard-teacher" },
+    { id: "ach-2", value: "3+", label: "Completed Tech Projects", icon: "fas fa-laptop-code" },
+    { id: "ach-3", value: "6+", label: "AI & Java Certifications", icon: "fas fa-award" },
+    { id: "ach-4", value: "2", label: "Postgrad Degrees (MCA & M.Tech)", icon: "fas fa-graduation-cap" }
   ],
   education: [
     {
       id: "edu-1",
-      degree: "M.Tech (CSE - Artificial Intelligence)",
-      institution: "Jawaharlal Nehru Technological University",
-      period: "2021 - 2023",
-      description: "Specialized in Deep Learning, Natural Language Processing, and AI-driven Educational Frameworks. Graduated with top honors.",
+      degree: "Master of Technology (M.Tech) - Artificial Intelligence",
+      institution: "JNTU KAKINADA University",
+      period: "2023 - 2025",
+      description: "Focused on Neural Network Architectures, Generative AI Models, Reinforcement Learning, and Optimization Techniques. Cumulative GPA: 8.5/10.",
       icon: "fas fa-graduation-cap"
     },
     {
       id: "edu-2",
       degree: "Master of Computer Applications (MCA)",
-      institution: "Osmania University",
-      period: "2018 - 2021",
-      description: "Focused on Software Engineering, Database Management Systems, and Object-Oriented Programming.",
+      institution: "Dr. BR Ambedkar University",
+      period: "2020 - 2022",
+      description: "Focused on computer applications, algorithms, data structures, and database systems. Graduated with a GPA of 7.88/10.",
       icon: "fas fa-university"
     },
     {
       id: "edu-3",
       degree: "Bachelor of Commerce (B.Com)",
-      institution: "Kakatiya University",
-      period: "2015 - 2018",
-      description: "Background in business analytics, computer applications, and corporate accounts.",
+      institution: "Aditya Degree College, Haripuram",
+      period: "2017 - 2020",
+      description: "Background in commerce and business computing. Graduated with an aggregate score of 73%.",
       icon: "fas fa-book"
     }
   ],
   experience: [
     {
       id: "exp-1",
-      role: "Assistant Professor",
-      organization: "Leading Engineering Institution",
-      period: "2023 - Present",
-      description: "Delivering courses in Artificial Intelligence, Machine Learning, and Software Engineering. Pioneering dynamic and active VR-based classroom models.",
-      icon: "fas fa-briefcase"
+      role: "Java SME | Tech Expert | AI Expert",
+      organization: "College Dekho - ImaginXP",
+      period: "June 2025 - Present",
+      description: "Dedicated Tech Expert and Faculty. Delivering one-on-one mentorship, strategic connection guidance, and teaching courses in AI, ML, Software Engineering, Probability & Statistics, and Data Mining at Impact Engineering College (Bangalore) and Dev Bhoomi Uttarakhand University (Dehradun).",
+      icon: "fas fa-chalkboard-teacher"
     },
     {
       id: "exp-2",
-      role: "Technical Trainer",
-      organization: "AIVR Tech Academy",
-      period: "2022 - Present",
-      description: "Conducting hands-on coding bootcamps, workshops, and courses covering Python, Machine Learning, Generative AI APIs, and Cloud Architectures.",
+      role: "Technical Trainer | Java & AI Expert",
+      organization: "Six Phrase-VERANDA (Freelancer)",
+      period: "Jan 2025 - May 2025",
+      description: "Delivered Java programming, object-oriented logic, and AI bootcamp training to engineering students at Dayananda Sagar University (Bangalore), Jain Deemed University (Bangalore), and Geetanjali Engineering College (Hyderabad).",
       icon: "fas fa-laptop-code"
     },
     {
       id: "exp-3",
-      role: "Curriculum Developer",
-      organization: "Academic Advisory Board",
-      period: "2022 - 2024",
-      description: "Designed curriculum syllabi for undergraduate CSE-AI streams, incorporating LangChain, n8n workflows, RAG systems, and AI Agents.",
-      icon: "fas fa-file-signature"
-    },
-    {
-      id: "exp-4",
-      role: "Student Mentor",
-      organization: "Global Tech Mentorship Programs",
-      period: "2020 - Present",
-      description: "Guided over 10,000+ students and fresh graduates on resume building, technical interview preparation, AI project design, and career mapping.",
-      icon: "fas fa-user-friends"
-    },
-    {
-      id: "exp-5",
-      role: "Content Strategist",
-      organization: "AIVR Educational YouTube Channel",
-      period: "2021 - Present",
-      description: "Producing technical tutorials, career guides, and courses on Generative AI, RAG, and AI agent automations.",
-      icon: "fas fa-video"
+      role: "Assistant Professor & IT Developer",
+      organization: "GIET Institutions (Godavari Global University)",
+      period: "Jan 2022 - Jan 2025",
+      description: "Taught Java Programming, DBMS, Web Technologies, and Software Engineering. Coordinated IT infrastructure, maintained the college website, and developed django-based in-house tools.",
+      icon: "fas fa-briefcase"
     }
   ],
   skills: {
-    frontend: ["HTML", "CSS", "JavaScript", "React"],
-    programming: ["Java", "Python", "SQL"],
-    ai_data: ["Machine Learning", "Deep Learning", "Generative AI", "LangChain", "RAG", "Prompt Engineering", "AI Agents"],
-    cloud_tools: ["Google Cloud", "GitHub", "Docker", "n8n", "OpenRouter", "Gemini API"]
+    frontend: ["HTML", "CSS", "Flask", "Streamlit", "React", "jQuery"],
+    programming: ["Python", "Java", "C", "SQL"],
+    ai_data: ["Gen AI", "Machine Learning", "Data Science", "Natural Language Processing", "Deep Learning", "RAG", "Agentic AI", "CNN", "ANN", "Clustering"],
+    cloud_tools: ["Google Cloud", "Tensorflow", "Numpy", "Pandas", "Scikit-Learn", "OpenCV", "GitLab", "Jira"]
   },
   research: {
-    mainTitle: "Faculty-Led Generative AI Framework for Immersive Classroom Education",
-    description: "Developing a novel educational architecture that empowers professors to dynamically inject real-time AI agents and modular virtual reality content into high-enrollment classrooms to maximize student retention.",
+    mainTitle: "Faculty-Guided Generative AI Framework for Immersive Classroom Education: A Conceptual Framework",
+    description: "Developing a conceptual framework leveraging Generative AI, RAG architectures, and custom LLM interfaces to dynamically create personalized lesson materials, real-time code-debugging templates, and customized evaluation plans.",
     areas: [
       "Artificial Intelligence",
-      "Virtual Reality",
       "Generative AI",
-      "Educational Technology",
-      "AI-Powered Learning Systems"
+      "Natural Language Processing",
+      "RAG Systems",
+      "Agentic AI"
     ]
   },
   publications: [
     {
       id: "pub-1",
-      title: "Faculty-Led Generative AI Framework for Immersive Classroom Education",
-      authors: "Ramesh Gummadi, et al.",
-      venue: "Springer Lecture Notes in Educational Technology",
-      year: "2025",
-      doi: "10.1007/978-3-031-xxxx-x",
-      type: "Journal",
-      abstract: "This paper outlines a hybrid framework combining Large Language Models and VR visualization tools. It allows educators to generate custom lesson plans, dynamic quizzes, and interactive VR simulations from standard slide materials on the fly, bridging classroom pedagogy with immersive experiences."
-    },
-    {
-      id: "pub-2",
-      title: "RAG-Based Intelligent Agents for Personalized Student Mentorship in Higher Education",
-      authors: "Ramesh Gummadi",
-      venue: "IEEE International Conference on Advanced Learning Technologies (ICALT)",
-      year: "2024",
-      doi: "10.1109/ICALT.2024.000xx",
+      title: "Faculty-Guided Generative AI Framework for Immersive Classroom Education: A Conceptual Framework",
+      authors: "Gummadi Ramesh",
+      venue: "International Conference on Advance in Multidisciplinary Engineering (ICRAME-2026)",
+      year: "2026",
+      doi: "",
       type: "Conference",
-      abstract: "Proposes an architecture deploying retrieval-augmented generation (RAG) models trained on university curriculum, policies, and lecture resources. Results demonstrate a 40% speedup in student query resolutions with 95% accuracy compared to standard forum channels."
-    },
-    {
-      id: "pub-3",
-      title: "Analyzing the Impact of Large Language Models as Teaching Assistants in CSE Classrooms",
-      authors: "Ramesh Gummadi",
-      venue: "International Journal of Artificial Intelligence in Education",
-      year: "2024",
-      doi: "10.1007/s40593-024-xxxx-z",
-      type: "Journal",
-      abstract: "A comprehensive analysis of deployment of OpenAI and Google Gemini agents in coding labs. Studies user experience across a sample size of 500 students, documenting key improvements in logic formulation and debugging capabilities."
+      abstract: "Details a conceptual model using vector embeddings and Retrieval-Augmented Generation (RAG) to dynamically extract textbook chapters and slide content, creating active classroom quizzes and immersive teaching assistant agents."
     }
   ],
   projects: [
     {
       id: "proj-1",
-      title: "AIVR Learning Platform",
-      description: "AI + VR platform for immersive K-12 education. Dynamically generates VR environments using text-to-3D APIs based on standard teacher lecture notes.",
-      tech: ["Python", "React", "Three.js", "WebXR", "Gemini API"],
-      github: "https://github.com/ramesh-gummadi/aivr-learning-platform",
-      demo: "https://aivr-demo.edu"
+      title: "RAG-Based Intelligent Document Assistant",
+      description: "Built a Retrieval-Augmented Generation (RAG) system for querying PDF and document repositories using semantic search, vector embeddings, LangChain, ChromaDB, OpenAI API, and FastAPI.",
+      tech: ["LangChain", "ChromaDB", "OpenAI API", "FastAPI", "Python"],
+      github: "https://github.com/ramesh-gummadi/rag-document-assistant",
+      demo: "https://rag-assistant-demo.edu"
     },
     {
       id: "proj-2",
-      title: "AI Content Generation System",
-      description: "Automated educational content generation system using LLMs. Generates structured lesson notes, flashcards, MCQs, and detailed rubrics from text inputs.",
-      tech: ["Python", "n8n", "OpenRouter", "LangChain", "SQL"],
-      github: "https://github.com/ramesh-gummadi/ai-content-generator",
-      demo: "https://ai-content-generator.edu"
+      title: "AI-Powered Instagram Content Automation System",
+      description: "Designed and implemented an automated publishing workflow in n8n. Integrates OpenAI API for generating captions, hashtags, and scheduling posts via Instagram Graph API.",
+      tech: ["n8n", "OpenAI API", "Instagram API", "Google Sheets"],
+      github: "https://github.com/ramesh-gummadi/insta-content-automation",
+      demo: "https://n8n-workflow-dashboard.edu"
     },
     {
       id: "proj-3",
-      title: "YouTube Educational Automation",
-      description: "An AI-driven content creation and publishing workflow. Automates video topic research, script outlines, description formatting, and social banner distribution.",
-      tech: ["Node.js", "Gemini API", "n8n", "YouTube API"],
-      github: "https://github.com/ramesh-gummadi/yt-educational-automation",
-      demo: "https://yt-automation-dashboard.edu"
+      title: "Fake News Detection Using Machine Learning",
+      description: "Developed a binary classification model utilizing TF-IDF vectorization and NLP techniques to identify genuine and fake news articles, with a Flask-based real-time prediction interface.",
+      tech: ["Python", "Scikit-Learn", "NLP", "Pandas", "Flask"],
+      github: "https://github.com/ramesh-gummadi/fake-news-detector",
+      demo: "https://fake-news-detector.edu"
     }
   ],
   certifications: [
-    { id: "cert-1", name: "Google Advanced AI & Machine Learning Specialization", issuer: "Google Cloud", year: "2024", icon: "fab fa-google" },
-    { id: "cert-2", name: "Deep Learning Specialization", issuer: "DeepLearning.AI", year: "2023", icon: "fas fa-brain" },
-    { id: "cert-3", name: "Associate Cloud Engineer", issuer: "Google Cloud Platform", year: "2024", icon: "fas fa-cloud" },
-    { id: "cert-4", name: "Generative AI Agents Workflow Design", issuer: "n8n Academy", year: "2024", icon: "fas fa-project-diagram" },
-    { id: "cert-5", name: "Advanced Data Science with Python", issuer: "IBM", year: "2022", icon: "fas fa-chart-line" }
+    { id: "cert-1", name: "Certificate Of Research Paper", issuer: "ICRAME-2026 (International Conference)", year: "2026", icon: "fas fa-file-contract" },
+    { id: "cert-2", name: "Programming in JAVA", issuer: "NPTEL - IIT Kharagpur", year: "2023", icon: "fab fa-java" },
+    { id: "cert-3", name: "AI, ML, DL Specialization", issuer: "Udemy", year: "2024", icon: "fas fa-brain" },
+    { id: "cert-4", name: "Gen-AI Beginners Guide", issuer: "Udemy", year: "2023", icon: "fas fa-code-branch" },
+    { id: "cert-5", name: "Gen-AI Development Faculty Development Program", issuer: "Godavari Global University", year: "2024", icon: "fas fa-users" },
+    { id: "cert-6", name: "Web Developer Course (HTML/CSS/JS)", issuer: "Udemy", year: "2023", icon: "fas fa-award" }
   ],
   youtube: {
     channelName: "AIVR",
@@ -223,19 +189,19 @@ const DEFAULT_PORTFOLIO_DATA = {
   blogs: [
     {
       id: "blog-1",
-      title: "The Future of AI in Immersive VR Classrooms",
+      title: "Optimizing University IT infrastructure using Django",
       date: "June 15, 2026",
       readTime: "5 min read",
-      summary: "Explore the intersection of WebXR technology and Generative AI, demonstrating how educators can create real-time adaptive virtual worlds for science education.",
-      content: "Immersive VR classrooms have transitioned from science fiction to practical reality. By integrating real-time LLMs, virtual tutors can now guide students through historical sites or atomic structures, responding dynamically to student confusion in three dimensions..."
+      summary: "Explore database indexing, view optimizations, and how we integrated standard student registrar data to speed up attendance logging by 25%.",
+      content: "Developing for high-enrollment academic institutions requires robust back-end planning. By deploying Django ORM query optimizations and custom caching layers, we built a secure, real-time logging tool for class lists..."
     },
     {
       id: "blog-2",
-      title: "Building Autonomous AI Agents for Educational Workflows",
+      title: "Teaching Java & Generative AI: Academic Bootcamps in 2026",
       date: "May 28, 2026",
       readTime: "8 min read",
-      summary: "A practical guide to implementing LangChain RAG agents and n8n pipelines to automate standard teacher activities like grading, quiz creation, and lecture summarization.",
-      content: "Automation in academics doesn't replace the professor; it frees them. In this article, we step through creating a RAG agent using OpenRouter and Gemini API to ingest a university syllabus and instantly formulate standard assignments and matching rubrics..."
+      summary: "A review of curriculum structures that combine classical object-oriented programming (OOP) principles with new AI agent pipelines in bootcamp classrooms.",
+      content: "Teaching modern programming is no longer about syntax; it's about architecture and logical debugging. In our latest student workshops, we combine NPTEL-style Java training with custom GPT assistants to speed up logic formulation..."
     }
   ]
 };
